@@ -24,8 +24,8 @@ const Calculator = () => {
     const [name, setName] = useState<string>("");
     const [chaldeanValues, setChaldeanValues] = useState<CalculationResult>(defaultResult);
     const [pythagoreanValues, setPythagoreanValues] = useState<CalculationResult>(defaultResult);
-    const [chaldeanLetterValues, setChaldeanLetterValues] = useState<any[]>([]);
-    const [pythagoreanLetterValues, setPythagoreanLetterValues] = useState<any[]>([]);
+    const [chaldeanLetterValues, setChaldeanLetterValues] = useState<string[]>([]);
+    const [pythagoreanLetterValues, setPythagoreanLetterValues] = useState<string[]>([]);
 
     const cellStyle = "my-1 flex align-items-center justify-content-center h-2rem"
 
@@ -84,8 +84,8 @@ const Calculator = () => {
         const chaldeanMap = loadMapping('Chaldean');
         const pythagoreanMap = loadMapping('Pythagorean');
         
-        const chaldeanValues = name.toLowerCase().split('').map((char) => chaldeanMap.get(char) || '');
-        const pythagoreanValues = name.toLowerCase().split('').map((char) => pythagoreanMap.get(char) || '');
+        const chaldeanValues = name.toLowerCase().split('').map((char) => chaldeanMap.get(char)+'' || '');
+        const pythagoreanValues = name.toLowerCase().split('').map((char) => pythagoreanMap.get(char)+'' || '');
         
         setChaldeanLetterValues(chaldeanValues);
         setPythagoreanLetterValues(pythagoreanValues);
