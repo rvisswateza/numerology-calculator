@@ -83,13 +83,21 @@ const Calculator = () => {
     const calculateLetterValues = (name: string) => {
         const chaldeanMap = loadMapping('Chaldean');
         const pythagoreanMap = loadMapping('Pythagorean');
-        
-        const chaldeanValues = name.toLowerCase().split('').map((char) => chaldeanMap.get(char)+'' || '');
-        const pythagoreanValues = name.toLowerCase().split('').map((char) => pythagoreanMap.get(char)+'' || '');
-        
+    
+        const isAlphabet = (char: string) => /^[a-zA-Z]$/.test(char); // Regex to check if the character is an alphabet
+    
+        const chaldeanValues = name.toLowerCase().split('').map((char) => 
+            isAlphabet(char) ? (chaldeanMap.get(char) || '').toString() : ''
+        );
+    
+        const pythagoreanValues = name.toLowerCase().split('').map((char) => 
+            isAlphabet(char) ? (pythagoreanMap.get(char) || '').toString() : ''
+        );
+    
         setChaldeanLetterValues(chaldeanValues);
         setPythagoreanLetterValues(pythagoreanValues);
     };
+    
 
     useEffect(() => {
         setChaldeanValues(calculateNumerology('Chaldean', name.toLowerCase()))
