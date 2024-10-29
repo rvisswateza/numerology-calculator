@@ -120,7 +120,7 @@ const Calculator = () => {
                 </div>
                 {/* Display values of each letter of the name */}
                 {name.split('').map((letter, index) => (
-                    <div key={index} className='mx-1 hidden md:block'>
+                    <div key={index} className='hidden md:block'>
                         <div className={`${cellStyle} w-2rem flex`}></div>
                         <div className={`${cellStyle} w-2rem flex border-0 border-round-2xl ${isVowel(letter.toLowerCase()) ? "bg-red-100" : "bg-blue-100" }`}>{chaldeanLetterValues[index]}</div>
                         <div className={`${cellStyle} w-2rem flex text-green-900 font-bold`}>{letter}</div>
@@ -149,7 +149,7 @@ const Calculator = () => {
             <div className='mt-2 flex w-full surface-0 p-2 border-round-md overflow-auto block md:hidden'>
                 {/* Display values of each letter of the name */}
                 {name.split('').map((letter, index) => (
-                    <div key={index} className='mx-1 block md:hidden'>
+                    <div key={index} className='block md:hidden'>
                         <div className={`${cellStyle} w-2rem flex border-0 border-round-2xl ${isVowel(letter.toLowerCase()) ? "bg-red-100" : "bg-blue-100" }`}>{chaldeanLetterValues[index]}</div>
                         <div className={`${cellStyle} w-2rem flex text-green-900 font-bold`}>{letter}</div>
                         <div className={`${cellStyle} w-2rem flex border-0 border-round-2xl ${isVowel(letter.toLowerCase()) ? "bg-red-100" : "bg-blue-100" }`}>{pythagoreanLetterValues[index]}</div>
