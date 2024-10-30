@@ -4,6 +4,7 @@ import { InputText } from 'primereact/inputtext'
 import React, { useEffect, useState } from 'react'
 import pythagoreanMapping from '../data/pythagoreanMapping.json';
 import chaldeanMapping from '../data/chaldeanMapping.json';
+import { Badge } from 'primereact/badge';
 
 interface CalculationResult {
     vowels: number;
@@ -22,6 +23,7 @@ const Calculator = () => {
         actual: 0
     }
     const [name, setName] = useState<string>("");
+    const [nameLength, setNameLength] = useState<number>(0);
     const [chaldeanValues, setChaldeanValues] = useState<CalculationResult>(defaultResult);
     const [pythagoreanValues, setPythagoreanValues] = useState<CalculationResult>(defaultResult);
     const [chaldeanLetterValues, setChaldeanLetterValues] = useState<string[]>([]);
@@ -97,19 +99,28 @@ const Calculator = () => {
         setChaldeanLetterValues(chaldeanValues);
         setPythagoreanLetterValues(pythagoreanValues);
     };
+
+    const countAlphanumericCharacters = (str: string) => {
+        const alphanumericCharacters = str.match(/[a-zA-Z0-9]/g);
+        return alphanumericCharacters ? alphanumericCharacters.length : 0;
+    }    
     
 
     useEffect(() => {
         setChaldeanValues(calculateNumerology('Chaldean', name.toLowerCase()))
         setPythagoreanValues(calculateNumerology('Pythagorean', name.toLowerCase()))
         calculateLetterValues(name)
+        setNameLength(countAlphanumericCharacters(name))
     }, [name])
 
     return (
-        <div className='flex flex-column m-2 p-2 justify-content-center surface-200 border-round-md' >
+        <div className='flex flex-column m-2 p-2 justify-content-center shadow-3 border-round-md' >
             <label className='white-space-nowrap'>Enter name: </label>
-            <InputText className='w-full mt-2' style={{ letterSpacing: "2px" }} value={name} onChange={(e) => { setName(e.target.value.toUpperCase()) }} />
-            <div className='mt-2 flex w-full surface-0 p-2 border-round-md overflow-auto'>
+            <div className='flex align-items-center'>
+                <InputText className='w-full mt-2' style={{ letterSpacing: "2px" }} value={name} onChange={(e) => { setName(e.target.value.toUpperCase()) }} />
+                <Badge className='mt-2 ml-2' value={nameLength} size="large" />
+            </div>
+            <div className='mt-2 flex w-full surface-0 p-2 border-round-md shadow-1 overflow-auto'>
                 <div className='mx-1 justify-content-start'>
                     <div className={`${cellStyle} md:w-7rem`}> </div>
                     <div className={`${cellStyle} font-semibold hidden md:flex md:w-7rem`}>Chaldean</div>
@@ -146,7 +157,7 @@ const Calculator = () => {
                     <div className={`${cellStyle} w-5rem flex border-round-xl bg-green-200`}>{`${pythagoreanValues.total} / ${pythagoreanValues.actual}`}</div>
                 </div>
             </div>
-            <div className='mt-2 flex w-full surface-0 p-2 border-round-md overflow-auto block md:hidden'>
+            <div className='mt-2 flex w-full surface-0 p-2 shadow-1 border-round-md overflow-auto block md:hidden'>
                 {/* Display values of each letter of the name */}
                 {name.split('').map((letter, index) => (
                     <div key={index} className='block md:hidden'>
